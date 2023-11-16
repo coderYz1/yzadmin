@@ -8,6 +8,10 @@ const router = createRouter({
       redirect: '/main'
     },
     {
+      path: '/:pathMatch',
+      component: () => import('@/views/not-found/index.vue')
+    },
+    {
       path: '/main',
       component: () => import('@/views/main/index.vue')
     },

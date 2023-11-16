@@ -1,12 +1,13 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { useLoginStore } from '@/stores/login/login'
+import router from '@/router'
 
 const loginStore = useLoginStore()
 // 账号密码数据
 const account = reactive({
-  name: '',
-  password: ''
+  name: localStorage.getItem('name') ?? '',
+  password: localStorage.getItem('password') ?? ''
 })
 
 const formInstance = ref()
@@ -31,12 +32,24 @@ const rules = reactive({
 })
 
 //登录逻辑
-function loginActico() {
+function loginActico(rememberPwd) {
   formInstance.value.validate((value) => {
     if (value) {
       const name = account.name
       const password = account.password
-      loginStore.processLoginData({ name, password })
+
+      //通过pinia发送网络请求
+      loginStore.processLoginData({ name, password }).then((res) => {
+        //是否记住密码
+        if (rememberPwd === false) {
+          localStorage.removeItem('name')
+          localStorage.removeItem('password')
+        } else {
+          localStorage.setItem('name', name)
+          localStorage.setItem('password', password)
+        }
+        router.push('/main')
+      })
     } else {
       ElMessage.error('Oops, 请输入正确的账号密码.')
     }

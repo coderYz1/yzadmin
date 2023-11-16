@@ -3,7 +3,7 @@ import accountPanel from '@/views/login/cpns/account-panel.vue'
 import { ref, watch } from 'vue'
 
 //是否记住密码
-const rememberPwd = ref(localStorage.getItem('rememberPwd'))
+const rememberPwd = ref(localStorage.getItem('rememberPwd') === 'true')
 //保存记住密码选项
 watch(rememberPwd, (newValue) => {
   localStorage.setItem('rememberPwd', newValue)
@@ -19,7 +19,7 @@ const accountComponent = ref()
 function lognBtn() {
   if (currentPage.value === 'account') {
     console.log('账号密码登录')
-    accountComponent.value.loginActico()
+    accountComponent.value.loginActico(rememberPwd.value)
   } else {
     console.log('手机验证码登录')
   }
