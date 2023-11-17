@@ -1,5 +1,6 @@
 <script setup>
 import accountPanel from '@/views/login/cpns/account-panel.vue'
+import phonePanel from '@/views/login/cpns/phone-panel.vue'
 import { ref, watch } from 'vue'
 
 //是否记住密码
@@ -51,6 +52,7 @@ function lognBtn() {
             </el-icon>
             <span>手机登录</span>
           </template>
+          <phonePanel></phonePanel>
         </el-tab-pane>
       </el-tabs>
 
